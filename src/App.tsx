@@ -6,7 +6,7 @@ import { useEmployees } from "./hooks/useEmployees";
 import { usePaginatedTransactions } from "./hooks/usePaginatedTransactions";
 import { useTransactionsByEmployee } from "./hooks/useTransactionsByEmployee";
 import { EMPTY_EMPLOYEE } from "./utils/constants";
-import { Employee } from "./utils/types";
+import { Employee, Transaction } from "./utils/types";
 
 
 
@@ -18,14 +18,14 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [approvalStates, setApprovalStates] = useState<{ [key: string]: boolean }>({}); 
 
-  const removeDuplicates = (transactions) => {
-    const seen = new Set();
-    return transactions.filter(transaction => {
-      const duplicate = seen.has(transaction.id);
-      seen.add(transaction.id);
-      return !duplicate;
-    });
-  };
+  const removeDuplicates = (transactions: Transaction[]): Transaction[] => {
+    const seen = new Set()
+    return transactions.filter((transaction) => {
+      const duplicate = seen.has(transaction.id)
+      seen.add(transaction.id)
+      return !duplicate
+    })
+  }
 
   const transactions = useMemo(
     () => {
